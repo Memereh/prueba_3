@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery.js"></script>
+    <style>
+        div > h2 {
+            font: bold 20px/1.5 Helvetica, Arial, sans-serif;
+        }
+        form > input {
+            width: 10%;
+            height: 30px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            font: 16px/1.5 Helvetica, Arial, sans-serif;
+        }
+        form > input:focus {
+            border: 1px solid #ccc;
+        }
+
+        form > label {
+            display: inline-block;
+            width: 10%;
+            text-align: right;
+            padding-right: 10px;
+            font: bold 12px/1.5 Helvetica, Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="font: bold 40px/1.5 Helvetica, Arial, sans-serif;">Login</h1>
+    <div id="contenido">
+        <h2>Inicio de sesion</h2>
+        <form action="">
+            <label for="nombre">Nombre de usuario</label>
+            <input type="text" name="nombre" id="nombrel">
+            <br>
+            <label for="contraseña">Contraseña</label>
+            <input type="password" name="contraseña" id="contrasenal">
+            <br>
+            <input type="submit" id="btnlogin" value="Enviar">
+            <label id="confirmacionl"></label>
+        </form>
+        <h2>Registro de usuario</h2>
+        <form action="">
+            <label for="nombre">Nombre de usuario</label>
+            <input type="text" name="nombre" id="nombrer">
+            <br>
+            <label for="contraseña">Contraseña</label>
+            <input type="password" name="contraseña" id="contrasenar">
+            <br>
+            <input type="submit" id="btnregistro" value="Enviar">
+            <label id="confirmacionr"></label>
+        </form>
+    </div>
+    <script>
+        $("#btnlogin").click(function(){
+            var nombre = $("#nombrel").val();
+            var contrasena = $("#contrasenal").val();
+            $.ajax({
+                url: "http://127.0.0.1:8000/apiusuario/",
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                data: JSON.stringify({
+                    "nombre": nombre,
+                    "contrasena": contrasena,
+                    "permisos":"usuario"
+                })
+            }).DONE(function(data){
+                if(data.status == "ok"){
+                    $("#confirmacionl").html("<p>Bienvenido " + nombre + "</p>");
+                }else{
+                    $("#confirmacionl").html("<p>Usuario o contraseña incorrectos</p>");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
