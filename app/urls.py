@@ -17,6 +17,5 @@ from django.contrib import admin
 from django.urls import path
 from .views import *
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('apiview',ApiRespuesta.as_view())
+    path('apiview/',ApiRespuesta.as_view())
 ]
